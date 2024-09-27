@@ -1,180 +1,141 @@
 [package]
-name = "node-cli"
-version = "1.0.1"
-edition = "2021"
-default-run = "selendra"
+name = "selendra-node"
+version = "2.0.0"
 build = "build.rs"
-
-
-[package.metadata.wasm-pack.profile.release]
-# `wasm-opt` has some problems on linux, see
-# https://github.com/rustwasm/wasm-pack/issues/781 etc.
-wasm-opt = false
+authors = { workspace = true }
+edition = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
-[badges]
-travis-ci = { repository = "paritytech/substrate" }
-maintenance = { status = "actively-developed" }
-is-it-maintained-issue-resolution = { repository = "paritytech/substrate" }
-is-it-maintained-open-issues = { repository = "paritytech/substrate" }
-
-[[bin]]
-name = "selendra"
-path = "bin/main.rs"
-required-features = ["cli"]
-
-[lib]
-crate-type = ["cdylib", "rlib"]
-
 [dependencies]
-# third-party dependencies
-array-bytes = "6.1"
-clap = { version = "4.2.5", features = ["derive"], optional = true }
-codec = { package = "parity-scale-codec", version = "3.6.1" }
-serde = { version = "1.0.163", features = ["derive"] }
-jsonrpsee = { version = "0.16.2", features = ["server"] }
-futures = "0.3.21"
-log = "0.4.17"
-serde_json = "1.0.85"
-rand = "0.8"
+thiserror = { workspace = true }
+async-trait = { workspace = true }
+clap = { workspace = true }
+futures = { workspace = true }
+hex-literal = { workspace = true }
+jsonrpsee = { workspace = true, features = ["server", "macros"] }
+log = { workspace = true }
+parity-scale-codec = { workspace = true, features = ["derive"]  }
+serde_json = { workspace = true, features = ["arbitrary_precision"] }
+static_assertions = { workspace = true }
 
-# primitives
-sp-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-grandpa-primitives = { package = "sp-consensus-grandpa", git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-api = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-inherents = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-consensus = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-transaction-storage-proof = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-statement-store = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
+# Substrate
+prometheus-endpoint = { workspace = true }
+sc-basic-authorship = { workspace = true }
+sc-chain-spec = { workspace = true }
+sc-cli = { workspace = true }
+sc-client-api = { workspace = true }
+sc-consensus = { workspace = true }
+sc-consensus-aura = { workspace = true }
+sc-consensus-slots = { workspace = true }
+sc-consensus-manual-seal = { workspace = true }
+sc-executor = { workspace = true }
+sc-network = { workspace = true }
+sc-network-sync = { workspace = true }
+sc-offchain = { workspace = true }
+sc-rpc = { workspace = true }
+sc-rpc-api = { workspace = true }
+sc-service = { workspace = true }
+sc-telemetry = { workspace = true }
+sc-transaction-pool = { workspace = true } 
+sc-transaction-pool-api = { workspace = true }
 
-# client dependencies
-sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-chain-spec = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-statement-store = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-network = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-network-common = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-network-sync = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-network-statement = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-consensus-slots = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-grandpa = { package = "sc-consensus-grandpa", git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-rpc = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-basic-authorship = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-service = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", default-features = false }
-sc-telemetry = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-executor = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-sync-state-rpc = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-sysinfo = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-storage-monitor = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-offchain = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
 
-# frame dependencies
-frame-system = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-frame-benchmarking = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-frame-system-rpc-runtime-api = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-pallet-assets = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-pallet-transaction-payment = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-pallet-im-online = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", default-features = false }
+sp-api = { workspace = true, features = ["default"] }
+sp-arithmetic = { workspace = true, features = ["default"] }
+sp-block-builder = { workspace = true, features = ["default"] }
+sp-blockchain = { workspace = true }
+sp-consensus = { workspace = true, features = ["default"] }
+sp-consensus-aura = { workspace = true, features = ["default"] }
+sp-core = { workspace = true, features = ["default"] }
+sp-inherents = { workspace = true, features = ["default"] }
+sp-io = { workspace = true }
+sp-offchain = { workspace = true, features = ["default"] }
+sp-runtime = { workspace = true, features = ["default"] }
+sp-runtime-interface = { workspace = true }
+sp-session = { workspace = true, features = ["default"] }
+sp-timestamp = { workspace = true, features = ["default"] }
+sp-transaction-pool = { workspace = true, features = ["default"] }
+# These dependencies are used for RPC
+frame-system-rpc-runtime-api = { workspace = true }
+pallet-transaction-payment-rpc = { workspace = true }
+pallet-transaction-payment-rpc-runtime-api = { workspace = true }
+substrate-frame-rpc-system = { workspace = true }
+# These dependencies are used for runtime benchmarking
+frame-benchmarking = { workspace = true, optional = true }
+frame-benchmarking-cli = { workspace = true, optional = true }
+frame-system = { workspace = true }
+pallet-transaction-payment = { workspace = true }
 
-# node-specific dependencies
-selendra-runtime = { path = "../runtime/selendra" }
-selendra-runtime-constants = { path = "../runtime/selendra/constants" }
-selendra-rpc = { path = "../rpc" }
-selendra-primitives = { path = "../primitives" }
+# Frontier
+fc-api = { workspace = true }
+fc-cli = { workspace = true }
+fc-consensus = { workspace = true }
+fc-db = { workspace = true }
+fc-mapping-sync = { workspace = true }
+fc-rpc = { workspace = true }
+fc-rpc-core = { workspace = true }
+fc-storage = { workspace = true }
+fp-account = { workspace = true }
+fp-dynamic-fee = { workspace = true, features = ["default"] }
+fp-evm = { workspace = true, features = ["default"] }
+fp-rpc = { workspace = true, features = ["default"] }
 
-# CLI-specific dependencies
-sc-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-node-inspect = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-try-runtime-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
+# ALephBFT
+selendra-runtime-interfaces = { workspace = true }
+finality-aleph = { workspace = true }
+pallet-aleph-runtime-api = { workspace = true }
 
-fc-cli = { path = "../frontier/client/cli" }
-fc-consensus = { path = "../frontier/client/consensus" }
-fc-db = { path = "../frontier/client/db" }
-fc-mapping-sync = { path = "../frontier/client/mapping-sync", features = ["sql"] }
-fc-rpc = { path = "../frontier/client/rpc" }
-fc-rpc-core = { path = "../frontier/client/rpc-core" }
-fc-storage = { path = "../frontier/client/storage" }
-fp-rpc = { path = "../frontier/primitives/rpc", features = ["default"] }
-fp-evm = { path = "../frontier/primitives/evm", features = ["std"] }
-
-[dev-dependencies]
-futures = "0.3.21"
-tempfile = "3.1.0"
-assert_cmd = "2.0.2"
-nix = { version = "0.26.1", features = ["signal"] }
-serde_json = "1.0"
-regex = "1.6.0"
-platforms = "3.0"
-soketto = "0.7.1"
-criterion = { version = "0.4.0", features = ["async_tokio"] }
-tokio = { version = "1.22.0", features = ["macros", "time", "parking_lot"] }
-tokio-util = { version = "0.7.4", features = ["compat"] }
-wait-timeout = "0.2"
-
-sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-client-db = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-consensus-epochs = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-service-test = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-block-builder = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-
-substrate-rpc-client = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-pallet-timestamp = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-substrate-cli-test-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
+# Selendra
+selendra-runtime = { workspace = true, features = ["std"] }
+selendra-primitives = { workspace = true }
+client-runtime-api = { workspace = true }
 
 [build-dependencies]
-clap = { version = "4.2.5", optional = true }
-clap_complete = { version = "4.0.2", optional = true }
-
-pallet-balances = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-sc-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-sc-storage-monitor = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0" }
-substrate-frame-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-try-runtime-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
-substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v1.0.0", optional = true }
+substrate-build-script-utils = { workspace = true }
 
 [features]
-default = ["cli"]
-cli = [
-	"sc-cli",
-	"frame-benchmarking-cli",
-	"substrate-frame-cli",
+default = [
+	"std",
+	"rocksdb",
+	"sql",
+	"txpool",
+	"rpc-binary-search-estimate",
+]
+std = [
+    "parity-scale-codec/std",
+    "sp-api/std",
+    "sp-block-builder/std",
+    "sp-consensus-aura/std",
+    "sp-core/std",
+    "sp-runtime/std",
+    "sp-transaction-pool/std",
+    "selendra-primitives/std",
+    "sp-io/std",
+    "selendra-runtime-interfaces/std",
+]
+rocksdb = [
+	"sc-cli/rocksdb",
 	"sc-service/rocksdb",
-	"clap",
-	"clap_complete",
-	"substrate-build-script-utils",
-	"try-runtime-cli",
+	"fc-cli/rocksdb",
+	"fc-db/rocksdb",
+	"fc-mapping-sync/rocksdb",
+	"fc-rpc/rocksdb",
+	"selendra-runtime/with-rocksdb-weights",
 ]
+paritydb = [
+	"selendra-runtime/with-paritydb-weights",
+]
+sql = [
+	"fc-db/sql",
+	"fc-mapping-sync/sql",
+]
+txpool = ["fc-rpc/txpool"]
+rpc-binary-search-estimate = ["fc-rpc/rpc-binary-search-estimate"]
 runtime-benchmarks = [
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-benchmarking-cli/runtime-benchmarks",
+	"sc-service/runtime-benchmarks",
 	"selendra-runtime/runtime-benchmarks",
-	"frame-benchmarking-cli/runtime-benchmarks"
 ]
-# Enable features that allow the runtime to be tried and debugged. Name might be subject to change
-# in the near future.
-try-runtime = ["selendra-runtime/try-runtime", "try-runtime-cli/try-runtime"]
-
-# [[bench]]
-# name = "transaction_pool"
-# harness = false
-
-# [[bench]]
-# name = "block_production"
-# harness = false

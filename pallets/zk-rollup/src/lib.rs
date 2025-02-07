@@ -3,10 +3,14 @@
 mod operator;
 mod proof;
 mod state;
+mod evm;
+mod evm_proof;
 
 pub use operator::{Transaction, BatchData, ZkRollupOperator};
 pub use proof::{ZkProof, ProofVerifier, BatchProofSystem};
 pub use state::{StateTree, StateTransition};
+pub use evm::{EvmAccount, EvmTransaction, EvmStateManager};
+pub use evm_proof::{EvmCircuit, EvmProofVerifier, EvmBatchProcessor};
 pub use pallet::*;
 
 #[frame_support::pallet]

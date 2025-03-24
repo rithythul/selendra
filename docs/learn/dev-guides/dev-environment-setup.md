@@ -76,12 +76,12 @@ module.exports = {
       accounts: [
         "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // Dev account
       ],
-      chainId: 1994
+      chainId: 1961
     },
     selendraTestnet: {
       url: "https://testnet.selendra.org",
       accounts: ["YOUR_PRIVATE_KEY"], // Replace with your account's private key
-      chainId: 1994
+      chainId: 1953
     }
   }
 };

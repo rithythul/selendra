@@ -61,17 +61,17 @@ module.exports = {
       accounts: [
         "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // Development account private key
       ],
-      chainId: 1994
+      chainId: 1961
     },
     selendraTest: {
       url: "https://testnet.selendra.org",
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 1994
+      chainId: 1953
     },
     selendraMain: {
       url: "https://mainnet.selendra.org",
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 1994
+      chainId: 1961
     }
   },
   paths: {

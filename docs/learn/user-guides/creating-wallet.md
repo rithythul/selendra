@@ -154,3 +154,7 @@ After creating your wallet:
 - [Fund your wallet](./making-transfers.md) with SEL tokens
 - [Set up staking](./staking-basics.md) to earn rewards
 - [Explore dApps](https://selendra.org/ecosystem) built on Selendra 
+
+1. **MetaMask**: For EVM compatibility
+   - Add Selendra network with ChainID 1961 (mainnet) or 1953 (testnet)
+   - RPC URL: http://127.0.0.1:9933 (local) or https://testnet.selendra.org (testnet) 
